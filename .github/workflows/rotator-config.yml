@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ROTATOR_TOKEN }}
         run: |
 
-          set -e
+          set -x
 
           # Change CONFIGURATIONS below to a csv list of the configurations you want to potentially trigger in the product repo
           # The product repo will only rotate the configurations that you list here.
