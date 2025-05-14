@@ -49,6 +49,7 @@ jobs:
         run: |
           gh extension install thetechcollective/gh-rotator
 
+
       - name: trigger the config rotator on the product repo
         env:
           GITHUB_TOKEN: ${{ secrets.ROTATOR_TOKEN }}
