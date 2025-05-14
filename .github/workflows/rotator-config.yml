@@ -16,13 +16,12 @@ on:
     tags:
       - '[0-9].[0-9].[0-9]rc'
       - '[0-9][0-9]*.[0-9][0-9]*.[0-9][0-9]*rc' 
+
   # This is the 'prod' configuration
   # trigger on a SEMVER tag with no suffix /\d+\.\d+\.\d+/
   # Examples 10.2.3, 1.20.3, 1.2.30, 10.20.30
       - '[0-9].[0-9].[0-9]'
-      - '[0-9][0-9]*.[0-9][0-9]*.[0-9][0-9]*' 
-  
-  
+      - '[0-9][0-9]*.[0-9][0-9]*.[0-9][0-9]*'   
   
 jobs:
   create-manifest:
@@ -56,16 +55,22 @@ jobs:
           # The product repo will only rotate the configurations that you list here.
           # E.g. Even if a trigger event is defined in configuration `prod` it will not rotate if
           # you set CONFIGURATIONS=dev,qa
-          CONFIGURATIONS=dev,qa,prod
+          CONFIGURATIONS=dev,qa
 
-          echo "Configuration: dev,qa,prod"                       >> $GITHUB_STEP_SUMMARY
+          echo "Configuration: $CONFIGURATIONS".                  >> $GITHUB_STEP_SUMMARY
           echo "Triggering repository: ${{ github.repository }}"  >> $GITHUB_STEP_SUMMARY
           echo "Triggering event: ${{ github.event_name }}"       >> $GITHUB_STEP_SUMMARY
           echo "Triggering SHA: ${{ github.sha }}"                >> $GITHUB_STEP_SUMMARY
 
           # trigger the config rotator on the product repo
-          # the product repo is the repo that contains the product-rotator.json
-          # You should change the REPO variable to your own product repo - the rest of the command stays the same
-          REPO=thetechcollective/product-sample
-          echo "On repository: $REPO"                             >> $GITHUB_STEP_SUMMARY
-          gh workflow run .github/workflows/rotator.yml --repo ${REPO} --ref main -f triggering_repo=${{ github.repository }} -f triggering_event=${{ github.event_name }} -f component_sha=${{ github.sha }} -f configuration=${CONFIGURATIONS} 
+          # the PRODUCT_REPO is the repo that contains the product-rotator.json
+          # the PRODUCT_WORKFLOW is the workflow that will be triggered
+          # the PRODUCT_BRANCH is the branch that will be used to trigger the workflow
+          # You should change the PRODUCT_REPO variable to your own product repo - the rest of the command stays the same
+
+          PRODUCT_REPO=config-rotator/product-sample
+          PRODUCT_WORKFLOW=.github/workflows/rotator.yml
+          PRODUCT_BRANCH=main
+
+          echo "On repository: $PRODUCT_REPO"                             >> $GITHUB_STEP_SUMMARY
+          gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f triggering_repo=${{ github.repository }} -f triggering_event=${{ github.event_name }} -f component_sha=${{ github.sha }} -f configuration=${CONFIGURATIONS} 
