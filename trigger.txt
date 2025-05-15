@@ -8,3 +8,4 @@ fire
 forgot to upload
 done?
 delete
+config
