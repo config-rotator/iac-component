@@ -83,4 +83,4 @@ jobs:
           echo "On repository: $PRODUCT_REPO"                             >> $GITHUB_STEP_SUMMARY
           gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f repo=${{ github.repository }} -f event_name=${{ github.ref_name }} -f sha=${{ github.sha }} -f event_type=${{ github.ref_type }} 
 
-          echo "See https://github.com/$(PRODUCT_REPO)/actions/workflows/${PRODUCT_WORKFLOW}"  >> $GITHUB_STEP_SUMMARY
+          echo "See https://github.com/${PRODUCT_REPO}/actions/workflows/${PRODUCT_WORKFLOW}"  >> $GITHUB_STEP_SUMMARY
