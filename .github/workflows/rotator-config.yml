@@ -81,4 +81,4 @@ jobs:
           PRODUCT_BRANCH=main
 
           echo "On repository: $PRODUCT_REPO"                             >> $GITHUB_STEP_SUMMARY
-          gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f triggering_repo=${{ github.repository }} -f triggering_event_name=${{ github.ref_name }} -f triggering_sha=${{ github.sha }} -f triggering_event_type=${ github.ref_type } 
+          gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f repo=${{ github.repository }} -f event_name=${{ github.ref_name }} -f sha=${{ github.sha }} -f event_type=${{ github.ref_type }} 
