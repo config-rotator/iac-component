@@ -65,10 +65,10 @@ jobs:
             CONFIGURATION="prod-tag-push"
           fi
 
-          echo "Configuration: $CONFIGURATION".                   >> $GITHUB_STEP_SUMMARY
-          echo "Triggering repository: ${{ github.repository }}"  >> $GITHUB_STEP_SUMMARY
-          echo "Triggering event: ${{ github.ref_name }}"         >> $GITHUB_STEP_SUMMARY
-          echo "Triggering SHA: ${{ github.sha }}"                >> $GITHUB_STEP_SUMMARY
+          echo "Configuration: $CONFIGURATION".                                   >> $GITHUB_STEP_SUMMARY
+          echo "Triggering repository: ${{ github.repository }}"                  >> $GITHUB_STEP_SUMMARY
+          echo "Triggering event: ${{ github.ref_nype }}:${{ github.ref_name }}"  >> $GITHUB_STEP_SUMMARY
+          echo "Triggering SHA: ${{ github.sha }}"                                >> $GITHUB_STEP_SUMMARY
 
           # trigger the config rotator on the product repo
           # the PRODUCT_REPO is the repo that contains the product-rotator.json
@@ -81,4 +81,4 @@ jobs:
           PRODUCT_BRANCH=main
 
           echo "On repository: $PRODUCT_REPO"                             >> $GITHUB_STEP_SUMMARY
-          gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f triggering_repo=${{ github.repository }} -f triggering_event=${{ github.ref_name }} -f component_sha=${{ github.sha }} -f configuration=${CONFIGURATION} 
+          gh workflow run ${PRODUCT_WORKFLOW} --repo ${PRODUCT_REPO} --ref ${PRODUCT_BRANCH} -f triggering_repo=${{ github.repository }} -f triggering_event_name=${{ github.ref_name }} -f triggering_sha=${{ github.sha }} -f triggering_event_type=${ github.ref_name } 
