@@ -15,3 +15,4 @@ pull
 token
 token
 dev-flow
+all
