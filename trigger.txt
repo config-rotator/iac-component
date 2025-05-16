@@ -18,3 +18,4 @@ dev-flow
 all
 new token
 unset actor
+checkout token
