@@ -67,6 +67,7 @@ jobs:
             git checkout  ${{ inputs.sha }}
             SEMVER=$(gh semver bump --patch --suffix rc)
             git push --tags origin
-            gh release create `gh semver` --latest --verify-tag --prerelease --generate-notes
-            echo "The commit '${{ inputs.sha }}' is now marked shippable (release candidate) with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
+            RELEASE_URL=$(gh release create `gh semver` --latest --verify-tag --prerelease --generate-notes)
+            echo "The commit '${{ inputs.sha }}' is now marked shippable with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
+            echo "See the prerelease online: ${RELEASE_URL}" >> $GITHUB_STEP_SUMMARY
           fi
