@@ -49,13 +49,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ROTATOR_COMMIT_TOKEN }}
         run: |
-
           set -x
  
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_ENV
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_OUTPUT
 
-          set +e
+          set +e # Dont fail the job if the command fails
           TAGS=$(git describe --exact-match ${{ inputs.sha }} 2>/dev/null)
           set -e
           echo "TAGS=${TAGS}" >> $GITHUB_STEP_SUMMARY
@@ -68,5 +67,6 @@ jobs:
             git checkout  ${{ inputs.sha }}
             SEMVER=$(gh semver bump --patch --suffix rc)
             git push --tags origin
+            gh release create `gh semver` --latest --verify-tag --prerelease --generate-notes
             echo "The commit '${{ inputs.sha }}' is now marked shippable (release candidate) with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
           fi
