@@ -55,7 +55,9 @@ jobs:
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_ENV
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_OUTPUT
 
+          set +e
           TAGS=$(git describe --exact-match ${{ inputs.sha }} 2>/dev/null)
+          set -e
           echo "TAGS=${TAGS}" >> $GITHUB_STEP_SUMMARY
 
           if [[ -n "$TAGS" ]] && [[ "$TAGS" =~ ^[0-9]+\.[0-9]+\.[0-9]+rc$ ]]; then
