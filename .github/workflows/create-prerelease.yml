@@ -61,6 +61,7 @@ jobs:
           SEMVER=$(gh semver bump --patch --suffix rc)
           git push --tags origin
           echo "The commit '${{ inputs.sha }}' is now marked shippable (release candidate) with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
+          exit 0
 
 
           if [[ -n "$TAGS" ]] && [[ "$TAGS" =~ ^[0-9]+\.[0-9]+\.[0-9]+rc$ ]]; then
