@@ -56,6 +56,13 @@ jobs:
           TAGS=$(git describe --exact-match ${{ inputs.sha }} 2>/dev/null)
           echo "TAGS=${TAGS}" >> $GITHUB_STEP_SUMMARY
 
+          echo "Mark **${{ inputs.sha }}** as shippable (release candidate)"  >> $GITHUB_STEP_SUMMARY
+          git checkout  ${{ inputs.sha }}
+          SEMVER=$(gh semver bump --patch --suffix rc)
+          git push --tags origin
+          echo "The commit '${{ inputs.sha }}' is now marked shippable (release candidate) with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
+
+
           if [[ -n "$TAGS" ]] && [[ "$TAGS" =~ ^[0-9]+\.[0-9]+\.[0-9]+rc$ ]]; then
             echo "The commit '${{ inputs.sha }}' is already marked shippable (release candidate)" >> $GITHUB_STEP_SUMMARY
             echo "'$TAGS' found for commit ${{ inputs.sha }}" >> $GITHUB_STEP_SUMMARY
