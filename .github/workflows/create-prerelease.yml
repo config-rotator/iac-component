@@ -53,6 +53,13 @@ jobs:
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_ENV
           echo "COMPONENT_SHA=${{ inputs.sha }}" >> $GITHUB_OUTPUT
 
+          git checkout  ${{ inputs.sha }}
+          SEMVER=$(gh semver bump --patch --suffix rc)
+          git tag $SEMVER
+          git push origin $SEMVER
+          echo "The commit '${{ inputs.sha }}' is now marked shippable (release candidate) with the '${SEMVER}' tag" >> $GITHUB_STEP_SUMMARY
+
+
           TAGS=$(git describe --exact-match ${{ inputs.sha }} 2>/dev/null)
           echo "TAGS=${TAGS}" >> $GITHUB_STEP_SUMMARY
 
