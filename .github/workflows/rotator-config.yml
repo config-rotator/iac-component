@@ -6,8 +6,7 @@ on:
     branches:
       - main
     tags:
-      # This pattern matches tags like 1.2.3
-      - '[0-9]+.[0-9]+.[0-9]+*'  # e.g. 1.2.3, 1.2.3-rc, etc.
+      - '[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   rotate-config:
@@ -15,10 +14,12 @@ jobs:
     permissions:
       actions: write
     
+    secrets:
+      token: ${{ secrets.ROTATOR_TOKEN }}
+    
     uses: thetechcollective/gh-rotator/.github/workflows/rotate-config.yml@experimental
     
     with:
       product-repo: config-rotator/product-sample
       product-workflow: .github/workflows/rotator.yml
-      token: ${{ secrets.ROTATOR_TOKEN }}  
       rotator-pin: experimental
