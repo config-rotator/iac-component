@@ -17,9 +17,8 @@ jobs:
     secrets:
       token: ${{ secrets.ROTATOR_TOKEN }}
     
-    uses: thetechcollective/gh-rotator/.github/workflows/rotate-config.yml@experimental
+    uses: thetechcollective/gh-rotator/.github/workflows/dispatch.yml@experimental
     
     with:
       product-repo: config-rotator/product-sample
       product-workflow: .github/workflows/rotator.yml
-      rotator-pin: experimental
