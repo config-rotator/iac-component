@@ -20,5 +20,5 @@ jobs:
     with:
       product-repo: config-rotator/product-sample
       product-workflow: .github/workflows/rotator.yml
-      token: ${{ secrets.ROTATOR_TOKEN }}  
+      token: ${{ ${{ secrets.ROTATOR_TOKEN }}  
       rotator-pin: experimental
