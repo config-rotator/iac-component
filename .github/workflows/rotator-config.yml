@@ -1,14 +1,7 @@
-# Sample workflow for triggering the rotator
-# This workflow demonstrates how to set up a trigger for configuration rotation
-# It will run on push to main branch or when tags with semantic versioning are pushed
-
 name: Rotate Product Configuration
 
 on:
-  # Manual trigger for testing
-  workflow_dispatch:
-  
-  # Automatically trigger on push to main or version tags
+  workflow_dispatch:  
   push:
     branches:
       - main
@@ -17,35 +10,15 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+*'  # e.g. 1.2.3, 1.2.3-rc, etc.
 
 jobs:
-  # This job calls the reusable workflow from the gh-rotator repository
   rotate-config:
     name: Rotate product config
     permissions:
-      actions: write  # Required to trigger workflows in other repositories
+      actions: write
     
-    # Reference to the reusable workflow
-    # Use the published version (e.g., @v1) or a specific branch/tag (@experimental)
     uses: thetechcollective/gh-rotator/.github/workflows/rotate-config.yml@experimental
     
-    # Inputs required by the reusable workflow
     with:
-      # CONFIGURATION: Can be automatically determined based on the trigger:
-      # - Push to main → dev
-      # - Tag with -rc suffix → qa
-      # - Other tag → prod
-      # Uncomment to override this behavior:
-      # configuration: dev  # Options: dev, qa, prod
-      
-      # PRODUCT REPOSITORY: The repository where the config rotation should occur
-      product-repo: config-rotator/product-sample  # Format: org/repo
-      
-      # WORKFLOW FILE: Path to the workflow file in the product repository
+      product-repo: config-rotator/product-sample
       product-workflow: .github/workflows/rotator.yml
-      
-      # TOKEN: Personal Access Token with workflow permissions in the product repository
-      # NOTE: This is a sample - in a real workflow you'd use your actual secret
       token: ${{ secrets.ROTATOR_TOKEN }}  
-      
-      # PIN: Use a specific version of the gh-rotator extension
-      # Options: a specific tag/version, branch name, or leave empty for latest
       rotator-pin: experimental
