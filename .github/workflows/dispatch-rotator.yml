@@ -6,16 +6,8 @@ on:
     branches:
       - main
     tags:
-      # SemVer 2.0.0 compliant patterns
-      # Core: MAJOR.MINOR.PATCH (e.g., 1.0.0)
-      # Optional: -PRERELEASE (e.g., -alpha.1)
-      # Optional: +BUILD (e.g., +exp.sha.5114f85)
-      
-      # Pattern without v prefix
-      - '[0-9]+.[0-9]+.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
-      
-      # Pattern with v prefix (common convention)
-      - 'v[0-9]+.[0-9]+.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
+      # Simple pattern for version tags (includes prerelease and build metadata)
+      - '[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   rotate-config:

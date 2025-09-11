@@ -26,8 +26,3 @@
   my-pr = "!f() { gh pr list --head $(git rev-parse --abbrev-ref HEAD) --json number | jq -r '.[].number'; }; f"
   pr-automerge = "!f() { gh pr merge $(git my-pr) --rebase --auto; }; f"
   
-[project]
-  owner   = thetechcollective
-  number  = 12
-  workon  = Status:In Progress
-  deliver = Status:Delivery Initiated
